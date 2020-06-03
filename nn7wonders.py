@@ -32,6 +32,8 @@ batch_size, input_size, hidden_size, num_classes = 64, 21, 42, 21
 model = Net(input_size, hidden_size, num_classes)
 print(model)
 
+## TODO: load game dataset for training
+
 # Create random tensors for tests
 x = torch.randn(batch_size, input_size)
 y = torch.randn(batch_size, num_classes)
