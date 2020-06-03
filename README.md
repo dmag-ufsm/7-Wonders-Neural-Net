@@ -1,2 +1,3 @@
-# 7-Wonders-Neural-Net
-Aritificial neural network for the 7 Wonders GameBoard
+# Neural network to play 7 Wonders
+Requirements:
+[Pytorch](https://pytorch.org/)
