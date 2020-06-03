@@ -12,12 +12,13 @@ import torch.nn as nn
 import torch.nn.functional as F
 from pathlib import Path
 
+## Define network
 class Net(nn.Module):
   def __init__(self, input_size, hidden_size, num_classes):
     super(Net, self).__init__()
     self.net = nn.Sequential(
         nn.Linear(input_size, hidden_size),
-        nn.Sigmoid(),
+        nn.ReLU(),
         nn.Linear(hidden_size, num_classes)
     )
   
@@ -25,10 +26,11 @@ class Net(nn.Module):
     x = self.net(x)
     return x
 
-model = Net(21, 42, 21)
-print(model)
-
 batch_size, input_size, hidden_size, num_classes = 64, 21, 42, 21
+
+## Instantiating network, passing size of first, second, third layer respectively
+model = Net(input_size, hidden_size, num_classes)
+print(model)
 
 # Create random tensors for tests
 x = torch.randn(batch_size, input_size)
@@ -37,8 +39,12 @@ y = torch.randn(batch_size, num_classes)
 print(x)
 print(y)
 
+## set function to calculate error
 criterion = torch.nn.MSELoss(reduction='sum')
+## optimization method
 optimizer = torch.optim.SGD(model.parameters(), lr=1e-4)
+
+## train loop
 for t in range(500):
   out = model(x)
 
@@ -49,6 +55,8 @@ for t in range(500):
   
   # zero gradients, perform 
   optimizer.zero_grad()
+
+  # backpropagation
   loss.backward()
   optimizer.step()
 
@@ -58,5 +66,6 @@ print(model.state_dict())
 ## create models folder if not exists
 Path("./models").mkdir(parents=True, exist_ok=True)
 
+## save model in file
 PATH = './models/seven_net.pth'
 torch.save(model.state_dict(), PATH)
