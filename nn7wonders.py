@@ -10,6 +10,7 @@ Original file is located at
 import torch 
 import torch.nn as nn 
 import torch.nn.functional as F
+from pathlib import Path
 
 class Net(nn.Module):
   def __init__(self, input_size, hidden_size, num_classes):
@@ -51,3 +52,11 @@ for t in range(500):
   loss.backward()
   optimizer.step()
 
+print(model.state_dict())
+
+## this only works with python >= 3.5
+## create models folder if not exists
+Path("./models").mkdir(parents=True, exist_ok=True)
+
+PATH = './models/seven_net.pth'
+torch.save(model.state_dict(), PATH)
